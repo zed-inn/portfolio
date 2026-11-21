@@ -1,0 +1,108 @@
+/* lowercased comments per rule 8 */
+/* swiss editorial monograph design system: warm paper (:root) & dark ink (.dark) */
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg: #f7f6f2;
+    --bg-subtle: #efede7;
+    --bg-elevated: #ffffff;
+    --ink: #111110;
+    --ink-muted: #575651;
+    --ink-faint: #8a8880;
+    --rule: rgba(17, 17, 16, 0.12);
+    --rule-strong: rgba(17, 17, 16, 0.28);
+    --accent: #0f766e;
+    --btn-bg: #111110;
+    --btn-ink: #f7f6f2;
+    --btn-bg-hover: #292926;
+  }
+
+  .dark {
+    --bg: #0a0a0a;
+    --bg-subtle: #141413;
+    --bg-elevated: #111110;
+    --ink: #f4f4f0;
+    --ink-muted: #a1a09a;
+    --ink-faint: #676661;
+    --rule: rgba(244, 244, 240, 0.11);
+    --rule-strong: rgba(244, 244, 240, 0.28);
+    --accent: #34d399;
+    --btn-bg: #f4f4f0;
+    --btn-ink: #0a0a0a;
+    --btn-bg-hover: #ffffff;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    background-color: var(--bg);
+    color: var(--ink);
+  }
+
+  #workspace,
+  #experience,
+  #log {
+    scroll-margin-top: 4.5rem;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--ink);
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  ::selection {
+    background-color: var(--ink);
+    color: var(--bg);
+  }
+
+  /* editorial display serif */
+  .font-serif-editorial {
+    font-family: "Instrument Serif", Georgia, "Times New Roman", serif;
+    font-weight: 400;
+  }
+
+  /* tabular monospace strictly for indices, metrics, dates, and commits */
+  .font-mono {
+    font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+    font-feature-settings: "tnum" 1, "zero" 1;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--bg);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--rule-strong);
+    border-radius: 9999px;
+  }
+}
+
+/* respect os reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

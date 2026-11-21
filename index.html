@@ -1,0 +1,102 @@
+<!doctype html>
+<!-- lowercased comments per rule 8 -->
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kartikey Kumar — Backend Systems Engineer</title>
+    <meta
+      name="description"
+      content="Backend systems engineering portfolio of Kartikey Kumar (IIT Kanpur '26) — high-concurrency Node.js, Python, and C++17 backends, transactional pipelines, and production cloud infrastructure."
+    />
+    <meta name="theme-color" content="#0a0a0a" />
+    <!-- zero-flash theme initialization (defaults to dark ink) -->
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem("portfolio_theme");
+          if (saved === "light") {
+            document.documentElement.classList.remove("dark");
+          } else {
+            document.documentElement.classList.add("dark");
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <!-- open graph social preview metadata -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Kartikey Kumar" />
+    <meta property="og:title" content="Kartikey Kumar — Backend Systems Engineer" />
+    <meta
+      property="og:description"
+      content="IIT Kanpur '26 backend systems engineer building high-concurrency Node.js, Python, and C++17 services, multi-million-user data pipelines, and resilient cloud infrastructure."
+    />
+    <!-- twitter card metadata -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Kartikey Kumar — Backend Systems Engineer" />
+    <meta
+      name="twitter:description"
+      content="IIT Kanpur '26 backend systems engineer building high-concurrency Node.js, Python, and C++17 services, multi-million-user data pipelines, and resilient cloud infrastructure."
+    />
+    <!-- schema.org profilepage + person json-ld for entity resolution -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "ProfilePage",
+        "dateModified": "2026-11-21T17:22:00+05:30",
+        "mainEntity": {
+          "@type": "Person",
+          "@id": "#person",
+          "name": "Kartikey Kumar",
+          "givenName": "Kartikey",
+          "familyName": "Kumar",
+          "jobTitle": "Backend Systems Engineer",
+          "description": "IIT Kanpur '26 backend systems engineer specializing in high-concurrency APIs, transactional pipelines, database internals, and cloud infrastructure.",
+          "email": "mailto:kartikey.hom@gmail.com",
+          "sameAs": [
+            "https://github.com/zed-inn",
+            "https://github.com/masked-redhat",
+            "https://www.linkedin.com/in/kartikey-kumar-009088269/",
+            "https://www.kaggle.com/skhull3"
+          ],
+          "worksFor": {
+            "@type": "Organization",
+            "name": "Rocket Reels"
+          },
+          "alumniOf": {
+            "@type": "EducationalOrganization",
+            "name": "Indian Institute of Technology Kanpur",
+            "url": "https://www.iitk.ac.in"
+          },
+          "knowsAbout": [
+            "Backend Engineering",
+            "Node.js",
+            "Fastify",
+            "TypeScript",
+            "Python",
+            "FastAPI",
+            "C++17",
+            "PostgreSQL",
+            "MongoDB",
+            "Apache Kafka",
+            "RabbitMQ",
+            "Redis",
+            "Docker",
+            "AWS"
+          ]
+        }
+      }
+    </script>
+    <!-- editorial fonts: instrument serif, inter, jetbrains mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="antialiased">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
