@@ -118,22 +118,22 @@ export const OsWorkspace: React.FC = () => {
 
         {/* progressive disclosure toggle */}
         {hiddenCount > 0 && (
-          <div className="pt-6 border-t border-[var(--rule)] flex items-center justify-between">
+          <div className="pt-6 border-t border-[var(--rule)] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <button
               type="button"
               onClick={() => setShowAll((prev) => !prev)}
-              className="inline-flex items-center justify-center gap-1.5 h-9 px-3.5 rounded-md border border-[var(--rule)] hover:border-[var(--rule-strong)] text-xs font-mono font-medium text-[var(--ink)] leading-none transition-colors cursor-pointer"
+              className="inline-flex items-center justify-center gap-1.5 w-full sm:w-auto h-10 sm:h-9 px-4 rounded-md border border-[var(--rule)] hover:border-[var(--rule-strong)] text-xs font-mono font-medium text-[var(--ink)] leading-none whitespace-nowrap transition-colors cursor-pointer active:scale-[0.98]"
             >
               <span>
                 {showAll
-                  ? "Show top 5 backend systems"
-                  : `View all ${sortedProjects.length} repositories (+${hiddenCount} more)`}
+                  ? "Show top 5 systems"
+                  : `View all ${sortedProjects.length} repositories`}
               </span>
               <ChevronDown
                 className={`w-3.5 h-3.5 shrink-0 transition-transform ${showAll ? "rotate-180" : ""}`}
               />
             </button>
-            <span className="font-mono text-[11px] text-[var(--ink-faint)]">
+            <span className="font-mono text-[11px] text-[var(--ink-faint)] text-center sm:text-right">
               {visibleProjects.length} / {sortedProjects.length} shown
             </span>
           </div>
