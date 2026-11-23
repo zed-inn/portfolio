@@ -20,7 +20,7 @@ export const rawPortfolioConfig: PortfolioConfigInput = {
     socialLinks: {
       github: "https://github.com/zed-inn",
       academicGithub: "https://github.com/masked-redhat",
-      linkedin: "https://www.linkedin.com/in/kartikey-kumar-009088269/",
+      linkedin: "https://www.linkedin.com/in/kartikey-kumar-iitk/",
       kaggle: "https://www.kaggle.com/skhull3",
       email: "kartikey.hom@gmail.com",
       protonEmail: "skhull.coding@proton.me",
