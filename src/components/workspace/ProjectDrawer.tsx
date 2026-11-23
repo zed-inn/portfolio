@@ -1,5 +1,5 @@
 // lowercased comments per rule 8
-// portal-mounted swiss editorial 4-part case study monograph sheet
+// portal-mounted swiss editorial case study monograph sheet
 import React, { useEffect } from "react";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "motion/react";
@@ -16,6 +16,8 @@ export const ProjectDrawer: React.FC<ProjectDrawerProps> = ({ project, onClose }
     if (!project) return;
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
+        // defer escape to command palette if open on top
+        if (document.querySelector('[aria-label="Command palette"]')) return;
         e.preventDefault();
         onClose();
       }
@@ -86,9 +88,9 @@ export const ProjectDrawer: React.FC<ProjectDrawerProps> = ({ project, onClose }
               </div>
             </div>
 
-            {/* single-scroll 4-part case study */}
+            {/* single-scroll case study */}
             <div className="px-6 sm:px-8 py-8 space-y-10 text-sm">
-              {/* 01 outcomes & tail latency */}
+              {/* 01 outcomes & verified k6 latency */}
               <section className="space-y-4">
                 <div className="font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--ink-faint)]">
                   01 · Quantifiable Outcomes
@@ -113,26 +115,28 @@ export const ProjectDrawer: React.FC<ProjectDrawerProps> = ({ project, onClose }
                   ))}
                 </div>
 
-                <div className="grid grid-cols-3 border-y border-[var(--rule)] py-3.5 text-center font-mono">
-                  <div>
-                    <div className="text-[10px] uppercase text-[var(--ink-faint)]">p50 Median</div>
-                    <div className="text-sm text-[var(--ink)] mt-0.5">
-                      {project.latencyProfile.p50}
+                {project.latencyProfile && (
+                  <div className="grid grid-cols-3 border-y border-[var(--rule)] py-3.5 text-center font-mono">
+                    <div>
+                      <div className="text-[10px] uppercase text-[var(--ink-faint)]">p50 Median</div>
+                      <div className="text-sm text-[var(--ink)] mt-0.5">
+                        {project.latencyProfile.p50}
+                      </div>
+                    </div>
+                    <div className="border-x border-[var(--rule)]">
+                      <div className="text-[10px] uppercase text-[var(--ink-faint)]">Mean</div>
+                      <div className="text-sm text-[var(--ink)] mt-0.5">
+                        {project.latencyProfile.mean}
+                      </div>
+                    </div>
+                    <div>
+                      <div className="text-[10px] uppercase text-[var(--ink-faint)]">p95</div>
+                      <div className="text-sm text-[var(--ink)] mt-0.5">
+                        {project.latencyProfile.p95}
+                      </div>
                     </div>
                   </div>
-                  <div className="border-x border-[var(--rule)]">
-                    <div className="text-[10px] uppercase text-[var(--ink-faint)]">p95</div>
-                    <div className="text-sm text-[var(--ink)] mt-0.5">
-                      {project.latencyProfile.p95}
-                    </div>
-                  </div>
-                  <div>
-                    <div className="text-[10px] uppercase text-[var(--ink-faint)]">p99 Bound</div>
-                    <div className="text-sm text-[var(--ink)] mt-0.5">
-                      {project.latencyProfile.p99}
-                    </div>
-                  </div>
-                </div>
+                )}
               </section>
 
               {/* 02 context & constraints */}
@@ -215,7 +219,7 @@ export const ProjectDrawer: React.FC<ProjectDrawerProps> = ({ project, onClose }
                 </div>
               </section>
 
-              {/* 04 verified commit trace */}
+              {/* 04 verified commit trace (rendered only when real commits are present) */}
               {project.commitHistory.length > 0 && (
                 <section className="space-y-3">
                   <div className="font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--ink-faint)]">

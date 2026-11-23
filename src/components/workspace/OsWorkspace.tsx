@@ -1,6 +1,6 @@
 // lowercased comments per rule 8
 // backend-first swiss editorial systems index with progressive disclosure
-import React, { useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { ArrowUpRight, ChevronDown } from "lucide-react";
 import { portfolioData } from "@/config";
 import { Project } from "@/config/schema";
@@ -9,6 +9,8 @@ import { ProjectDrawer } from "./ProjectDrawer";
 export const OsWorkspace: React.FC = () => {
   const [drawerProject, setDrawerProject] = useState<Project | null>(null);
   const [showAll, setShowAll] = useState(false);
+
+  const handleCloseDrawer = useCallback(() => setDrawerProject(null), []);
 
   // curate repositories ranked by backend systems depth (all 10 retained)
   const sortedProjects: Project[] = useMemo(() => {
@@ -141,7 +143,7 @@ export const OsWorkspace: React.FC = () => {
       </div>
 
       {/* portal-mounted editorial monograph sheet */}
-      <ProjectDrawer project={drawerProject} onClose={() => setDrawerProject(null)} />
+      <ProjectDrawer project={drawerProject} onClose={handleCloseDrawer} />
     </section>
   );
 };

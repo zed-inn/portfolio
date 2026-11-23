@@ -66,15 +66,16 @@ export const failureInvariantSchema = z.object({
   mitigation: z.string().min(5),
 });
 
+// optional measured k6 latency percentiles (p50, mean, p95 only when actually benchmarked)
 export const latencyProfileSchema = z.object({
   p50: z.string().min(1),
+  mean: z.string().min(1),
   p95: z.string().min(1),
-  p99: z.string().min(1),
 });
 
 export const projectSchema = z.object({
   id: z.string().min(1),
-  code: z.string().min(2).default("SYS-01"),
+  code: z.string().min(2),
   title: z.string().min(1),
   category: z.string().min(1),
   shortDescription: z.string().min(10),
@@ -86,26 +87,11 @@ export const projectSchema = z.object({
   liveUrl: z.string().url().optional(),
   kaggleUrl: z.string().url().optional(),
   architectureNotes: z.array(z.string().min(5)),
-  concurrencyModel: z.string().default("epoll Event Loop / Non-Blocking"),
-  memoryProfile: z.string().default("Zero intermediate heap allocations"),
-  protocolSpec: z.string().default("RFC 7230 / TCP Stream"),
-  failureInvariants: z
-    .array(failureInvariantSchema)
-    .default([
-      {
-        failureMode: "Network Partition / Dropouts",
-        mitigation: "Bounded retry buffers with exponential backoff and circuit breaking.",
-      },
-      {
-        failureMode: "Concurrency Race Conditions",
-        mitigation: "Row-level locks and write-ahead log atomic state transitions.",
-      },
-    ]),
-  latencyProfile: latencyProfileSchema.default({
-    p50: "1.2ms",
-    p95: "5.8ms",
-    p99: "14.2ms",
-  }),
+  concurrencyModel: z.string().min(1),
+  memoryProfile: z.string().min(1),
+  protocolSpec: z.string().min(1),
+  failureInvariants: z.array(failureInvariantSchema).default([]),
+  latencyProfile: latencyProfileSchema.optional(),
   featured: z.boolean().default(false),
   architectureDiagram: z.string().optional(),
   commitHistory: z.array(commitItemSchema).default([]),
@@ -183,12 +169,10 @@ export const portfolioConfigSchema = z.object({
       linkedin: z.string().url(),
       kaggle: z.string().url(),
       email: z.string().email(),
-      protonEmail: z.string().email(),
-      companyEmail: z.string().email(),
     }),
     resumeLinks: resumeLinksSchema,
   }),
-  lenses: z.array(lensDefinitionSchema),
+  lenses: z.array(lensDefinitionSchema).default([]),
   experiences: z.array(workExperienceSchema),
   projects: z.array(projectSchema),
   storyChapters: z.array(storyChapterSchema),

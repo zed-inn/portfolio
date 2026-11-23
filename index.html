@@ -15,10 +15,13 @@
       (function () {
         try {
           var saved = localStorage.getItem("portfolio_theme");
+          var metaTheme = document.querySelector('meta[name="theme-color"]');
           if (saved === "light") {
             document.documentElement.classList.remove("dark");
+            if (metaTheme) metaTheme.setAttribute("content", "#f7f6f2");
           } else {
             document.documentElement.classList.add("dark");
+            if (metaTheme) metaTheme.setAttribute("content", "#0a0a0a");
           }
         } catch (e) {}
       })();
@@ -32,7 +35,7 @@
       content="IIT Kanpur '26 backend systems engineer building high-concurrency Node.js, Python, and C++17 services, multi-million-user data pipelines, and resilient cloud infrastructure."
     />
     <!-- twitter card metadata -->
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="Kartikey Kumar — Backend Systems Engineer" />
     <meta
       name="twitter:description"
@@ -43,7 +46,7 @@
       {
         "@context": "https://schema.org",
         "@type": "ProfilePage",
-        "dateModified": "2026-11-21T17:22:00+05:30",
+        "dateModified": "2026-11-24T00:30:00+05:30",
         "mainEntity": {
           "@type": "Person",
           "@id": "#person",

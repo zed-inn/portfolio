@@ -1,26 +1,22 @@
 // lowercased comments per rule 8
-// milestones-first editorial ledger with zero-jitter constant font-weight tabs
+// milestones-first editorial ledger with live-only github commit stream
 import React, { useEffect, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { portfolioData } from "@/config";
-import {
-  CommitFeedItem,
-  fetchGitHubCommitFeed,
-  getStaticCommitFeed,
-} from "@/services/github";
+import { CommitFeedItem, fetchGitHubCommitFeed } from "@/services/github";
 
 const MILESTONE_PERIODS = [
   "Summer 2024",
   "Dec 2024 – Jan 2026",
   "Aug 2026 – Present",
-  "2026 Distributed",
+  "2026 Backend Systems",
   "2026 Open Data",
 ];
 
 export const CommitStream: React.FC = () => {
   const [activeTab, setActiveTab] = useState<"milestones" | "commits">("milestones");
-  const [commits, setCommits] = useState<CommitFeedItem[]>(() => getStaticCommitFeed().slice(0, 8));
-  const [mode, setMode] = useState<"live" | "verified">("verified");
+  const [commits, setCommits] = useState<CommitFeedItem[]>([]);
+  const [status, setStatus] = useState<"loading" | "live" | "unavailable">("loading");
   const [showAllCommits, setShowAllCommits] = useState(false);
   const [expandedMilestone, setExpandedMilestone] = useState<string | null>(null);
 
@@ -29,7 +25,7 @@ export const CommitStream: React.FC = () => {
     void fetchGitHubCommitFeed().then((res) => {
       if (!active) return;
       setCommits(res.items);
-      setMode(res.mode);
+      setStatus(res.mode);
     });
     return () => {
       active = false;
@@ -132,37 +128,56 @@ export const CommitStream: React.FC = () => {
           </div>
         )}
 
-        {/* tab 2: live + verified github commits */}
+        {/* tab 2: live-only github commits */}
         {activeTab === "commits" && (
           <div>
-            <div className="divide-y divide-[var(--rule)]">
-              {visibleCommits.map((item) => (
+            {status === "loading" ? (
+              <div className="py-8 font-mono text-xs text-[var(--ink-faint)]">
+                Loading live push activity from github.com/zed-inn...
+              </div>
+            ) : visibleCommits.length > 0 ? (
+              <div className="divide-y divide-[var(--rule)]">
+                {visibleCommits.map((item) => (
+                  <a
+                    key={item.id}
+                    href={item.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="py-3.5 -mx-3 px-3 rounded-lg hover:bg-[var(--bg-subtle)]/70 transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-4 group"
+                  >
+                    <div className="flex items-center gap-3 min-w-0">
+                      <span className="font-mono text-xs text-[var(--accent)] shrink-0">
+                        {item.sha}
+                      </span>
+                      <span className="font-mono text-[11px] text-[var(--ink-faint)] shrink-0">
+                        {item.repo}
+                      </span>
+                      <span className="text-xs sm:text-sm text-[var(--ink)] truncate">
+                        {item.message}
+                      </span>
+                    </div>
+
+                    <span className="font-mono text-[11px] text-[var(--ink-faint)] shrink-0 inline-flex items-center gap-1">
+                      <span>{item.date}</span>
+                      <ArrowUpRight className="w-3 h-3 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </span>
+                  </a>
+                ))}
+              </div>
+            ) : (
+              <div className="py-8 space-y-2 text-xs text-[var(--ink-muted)]">
+                <p>Live public push events are temporarily unavailable from the GitHub API.</p>
                 <a
-                  key={item.id}
-                  href={item.url}
+                  href={portfolioData.personal.socialLinks.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="py-3.5 -mx-3 px-3 rounded-lg hover:bg-[var(--bg-subtle)]/70 transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-4 group"
+                  className="inline-flex items-center gap-1 font-mono text-[var(--ink)] underline underline-offset-4 decoration-[var(--rule-strong)]"
                 >
-                  <div className="flex items-center gap-3 min-w-0">
-                    <span className="font-mono text-xs text-[var(--accent)] shrink-0">
-                      {item.sha}
-                    </span>
-                    <span className="font-mono text-[11px] text-[var(--ink-faint)] shrink-0">
-                      {item.repo}
-                    </span>
-                    <span className="text-xs sm:text-sm text-[var(--ink)] truncate">
-                      {item.message}
-                    </span>
-                  </div>
-
-                  <span className="font-mono text-[11px] text-[var(--ink-faint)] shrink-0 inline-flex items-center gap-1">
-                    <span>{item.date}</span>
-                    <ArrowUpRight className="w-3 h-3 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </span>
+                  <span>Inspect commit history directly on github.com/zed-inn</span>
+                  <ArrowUpRight className="w-3 h-3 shrink-0" />
                 </a>
-              ))}
-            </div>
+              </div>
+            )}
 
             <div className="pt-5 border-t border-[var(--rule)] flex flex-wrap items-center justify-between gap-2 text-xs">
               <div className="flex items-center gap-4">
@@ -189,7 +204,12 @@ export const CommitStream: React.FC = () => {
               </div>
 
               <span className="font-mono text-[11px] text-[var(--ink-faint)]">
-                Source: {mode === "live" ? "Live GitHub API" : "Verified Static Manifest"}
+                Source:{" "}
+                {status === "live"
+                  ? "Live GitHub API"
+                  : status === "loading"
+                    ? "Fetching GitHub API"
+                    : "GitHub API unavailable"}
               </span>
             </div>
           </div>

@@ -1,8 +1,6 @@
 // lowercased comments per rule 8
 // root layout orchestrating the backend systems editorial monograph portfolio
-import React, { Component, ErrorInfo, ReactNode, useEffect, useState } from "react";
-import { AtmosphereProvider } from "@/context/AtmosphereContext";
-import { AtmosphereCanvas } from "@/components/canvas/AtmosphereCanvas";
+import React, { Component, ErrorInfo, ReactNode, useCallback, useEffect, useState } from "react";
 import { Navbar } from "@/components/navigation/Navbar";
 import { CommandPalette } from "@/components/navigation/CommandPalette";
 import { PersonaHero } from "@/components/hero/PersonaHero";
@@ -71,9 +69,13 @@ function MainContent(): React.JSX.Element {
 export function App(): React.JSX.Element {
   const [isPaletteOpen, setIsPaletteOpen] = useState(false);
 
+  const handleOpenPalette = useCallback(() => setIsPaletteOpen(true), []);
+  const handleClosePalette = useCallback(() => setIsPaletteOpen(false), []);
+
   // global cmd/ctrl+k command palette toggle
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.repeat) return;
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
         e.preventDefault();
         setIsPaletteOpen((prev) => !prev);
@@ -85,12 +87,9 @@ export function App(): React.JSX.Element {
 
   return (
     <RootErrorBoundary>
-      <AtmosphereProvider>
-        <AtmosphereCanvas />
-        <Navbar onOpenCommandPalette={() => setIsPaletteOpen(true)} />
-        <CommandPalette isOpen={isPaletteOpen} onClose={() => setIsPaletteOpen(false)} />
-        <MainContent />
-      </AtmosphereProvider>
+      <Navbar onOpenCommandPalette={handleOpenPalette} />
+      <CommandPalette isOpen={isPaletteOpen} onClose={handleClosePalette} />
+      <MainContent />
     </RootErrorBoundary>
   );
 }

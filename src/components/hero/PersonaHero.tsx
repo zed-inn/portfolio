@@ -1,6 +1,6 @@
 // lowercased comments per rule 8
 // swiss editorial cover hero focused cleanly on backend systems engineering
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
 import { ArrowUpRight, Check, Copy } from "lucide-react";
 import { portfolioData } from "@/config";
@@ -8,14 +8,33 @@ import { PRIMARY_RESUME } from "@/config/resumeLinks";
 
 export const PersonaHero: React.FC = () => {
   const [copiedEmail, setCopiedEmail] = useState(false);
+  const copyTimerRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimerRef.current !== null) {
+        window.clearTimeout(copyTimerRef.current);
+      }
+    };
+  }, []);
 
   const handleCopyEmail = async () => {
+    const email = portfolioData.personal.socialLinks.email;
     try {
-      await navigator.clipboard.writeText(portfolioData.personal.socialLinks.email);
+      if (!navigator.clipboard?.writeText) {
+        throw new Error("clipboard api unavailable");
+      }
+      await navigator.clipboard.writeText(email);
       setCopiedEmail(true);
-      window.setTimeout(() => setCopiedEmail(false), 2000);
+      if (copyTimerRef.current !== null) {
+        window.clearTimeout(copyTimerRef.current);
+      }
+      copyTimerRef.current = window.setTimeout(() => {
+        setCopiedEmail(false);
+        copyTimerRef.current = null;
+      }, 2000);
     } catch {
-      window.location.href = `mailto:${portfolioData.personal.socialLinks.email}`;
+      window.location.href = `mailto:${email}`;
     }
   };
 
@@ -54,7 +73,7 @@ export const PersonaHero: React.FC = () => {
               </div>
 
               <p className="text-sm sm:text-base text-[var(--ink-muted)] leading-relaxed max-w-2xl">
-                IIT Kanpur graduate (&apos;26) specializing in backend systems engineering across Node.js, Python, and C++17. Proven experience scaling multi-million-user production clusters, executing zero-downtime replica resyncs, building 5-minute checkpointed delta ETL pipelines, and delivering resilient APIs end to end.
+                IIT Kanpur graduate (&apos;26) specializing in backend systems engineering across Node.js, Python, and C++17. Proven experience scaling multi-million-user production databases, executing zero-downtime replica resyncs, building 5-minute checkpointed delta ETL pipelines, and delivering resilient APIs end to end.
               </p>
 
               {/* pixel-centered action strip */}

@@ -1,5 +1,5 @@
 // lowercased comments per rule 8
-// rate-limit-safe github public push activity service with static manifest fallback
+// live-only github public push activity service with strict validation and caching
 import { portfolioData } from "@/config";
 
 export interface CommitFeedItem {
@@ -10,7 +10,7 @@ export interface CommitFeedItem {
   message: string;
   date: string;
   url: string;
-  source: "live" | "verified";
+  source: "live";
 }
 
 interface CachedPayload {
@@ -18,95 +18,110 @@ interface CachedPayload {
   items: CommitFeedItem[];
 }
 
-const CACHE_KEY = "gh_commit_feed_zed_inn_v1";
+const CACHE_KEY = "gh_commit_feed_zed_inn_v2";
 const CACHE_TTL_MS = 10 * 60 * 1000;
+const REPO_PATTERN = /^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/;
+const SHA_PATTERN = /^[0-9a-f]{7,40}$/i;
 
-function extractRepoName(githubUrl?: string): string {
-  if (!githubUrl) return "kaggle-dataset";
-  const parts = githubUrl.replace(/\/+$/, "").split("/");
-  return parts[parts.length - 1] || "repository";
-}
-
-// build verified static commit list from portfolio.config.ts
-export function getStaticCommitFeed(): CommitFeedItem[] {
-  const items: CommitFeedItem[] = [];
-  for (const project of portfolioData.projects) {
-    const repo = extractRepoName(project.githubUrl);
-    const baseUrl = project.githubUrl || project.kaggleUrl || portfolioData.personal.socialLinks.github;
-    for (const c of project.commitHistory) {
-      items.push({
-        id: `static-${project.id}-${c.hash}`,
-        sha: c.hash.slice(0, 7),
-        repo,
-        projectId: project.id,
-        message: c.message,
-        date: c.date,
-        url: baseUrl,
-        source: "verified",
-      });
-    }
-  }
-  return items;
+function isValidCommitItem(item: unknown): item is CommitFeedItem {
+  if (!item || typeof item !== "object") return false;
+  const candidate = item as Record<string, unknown>;
+  return (
+    typeof candidate.id === "string" &&
+    typeof candidate.sha === "string" &&
+    SHA_PATTERN.test(candidate.sha) &&
+    typeof candidate.repo === "string" &&
+    typeof candidate.message === "string" &&
+    typeof candidate.date === "string" &&
+    typeof candidate.url === "string" &&
+    candidate.url.startsWith("https://github.com/") &&
+    candidate.source === "live"
+  );
 }
 
 export async function fetchGitHubCommitFeed(): Promise<{
   items: CommitFeedItem[];
-  mode: "live" | "verified";
+  mode: "live" | "unavailable";
 }> {
-  const staticItems = getStaticCommitFeed();
-
-  // check sessionStorage cache first to avoid api rate limits
+  // check session storage cache first to avoid api rate limits
   try {
     const raw = window.sessionStorage.getItem(CACHE_KEY);
     if (raw) {
-      const parsed = JSON.parse(raw) as CachedPayload;
-      if (Date.now() - parsed.timestamp < CACHE_TTL_MS && parsed.items.length > 0) {
-        return { items: parsed.items, mode: "live" };
+      const parsed = JSON.parse(raw) as Partial<CachedPayload>;
+      if (
+        typeof parsed.timestamp === "number" &&
+        Date.now() - parsed.timestamp < CACHE_TTL_MS &&
+        Array.isArray(parsed.items)
+      ) {
+        const validCached = parsed.items.filter(isValidCommitItem);
+        if (validCached.length > 0) {
+          return { items: validCached, mode: "live" };
+        }
       }
     }
   } catch {
-    // ignore storage access errors
+    // ignore storage access or parse errors
   }
 
+  const controller = new AbortController();
+  const timeout = window.setTimeout(() => controller.abort(), 4500);
+
   try {
-    const controller = new AbortController();
-    const timeout = window.setTimeout(() => controller.abort(), 4500);
     const res = await fetch("https://api.github.com/users/zed-inn/events/public?per_page=30", {
       headers: { Accept: "application/vnd.github+json" },
       signal: controller.signal,
     });
-    window.clearTimeout(timeout);
 
     if (!res.ok) {
-      return { items: staticItems, mode: "verified" };
+      return { items: [], mode: "unavailable" };
     }
 
-    const events = (await res.json()) as Array<{
-      type?: string;
-      created_at?: string;
-      repo?: { name?: string };
-      payload?: {
-        commits?: Array<{ sha?: string; message?: string }>;
-      };
-    }>;
+    const events: unknown = await res.json();
+    if (!Array.isArray(events)) {
+      return { items: [], mode: "unavailable" };
+    }
 
     const liveItems: CommitFeedItem[] = [];
     const seen = new Set<string>();
 
-    for (const ev of events) {
-      if (ev.type !== "PushEvent" || !ev.payload?.commits) continue;
-      const fullRepo = ev.repo?.name || "zed-inn/repo";
-      const shortRepo = fullRepo.split("/")[1] || fullRepo;
-      const dateStr = ev.created_at ? ev.created_at.slice(0, 10) : "2026";
+    for (const rawEv of events) {
+      if (!rawEv || typeof rawEv !== "object") continue;
+      const ev = rawEv as {
+        type?: unknown;
+        created_at?: unknown;
+        repo?: { name?: unknown };
+        payload?: {
+          commits?: unknown;
+        };
+      };
 
-      for (const c of ev.payload.commits) {
-        const sha = (c.sha || "").slice(0, 7);
-        const message = (c.message || "").split("\n")[0].trim();
-        if (!sha || !message || seen.has(sha)) continue;
+      if (ev.type !== "PushEvent" || !Array.isArray(ev.payload?.commits)) continue;
+      const fullRepo = typeof ev.repo?.name === "string" ? ev.repo.name.trim() : "";
+      if (!REPO_PATTERN.test(fullRepo)) continue;
+
+      const shortRepo = fullRepo.split("/")[1];
+      const dateStr =
+        typeof ev.created_at === "string" && ev.created_at.length >= 10
+          ? ev.created_at.slice(0, 10)
+          : "2026";
+
+      for (const rawCommit of ev.payload.commits) {
+        if (!rawCommit || typeof rawCommit !== "object") continue;
+        const c = rawCommit as { sha?: unknown; message?: unknown };
+        const fullSha = typeof c.sha === "string" ? c.sha.trim() : "";
+        if (!SHA_PATTERN.test(fullSha)) continue;
+
+        const sha = fullSha.slice(0, 7);
+        const message =
+          typeof c.message === "string" ? c.message.split("\n")[0].trim() : "";
+        if (!message || seen.has(sha)) continue;
         seen.add(sha);
 
+        const commitUrl = `https://github.com/${fullRepo}/commit/${fullSha}`;
+        if (!commitUrl.startsWith("https://github.com/")) continue;
+
         const matchedProject = portfolioData.projects.find((p) =>
-          p.githubUrl?.toLowerCase().includes(shortRepo.toLowerCase())
+          p.githubUrl?.toLowerCase().endsWith(`/${shortRepo.toLowerCase()}`)
         );
 
         liveItems.push({
@@ -116,29 +131,30 @@ export async function fetchGitHubCommitFeed(): Promise<{
           projectId: matchedProject?.id,
           message,
           date: dateStr,
-          url: `https://github.com/${fullRepo}/commit/${c.sha}`,
+          url: commitUrl,
           source: "live",
         });
       }
     }
 
     if (liveItems.length === 0) {
-      return { items: staticItems, mode: "verified" };
+      return { items: [], mode: "unavailable" };
     }
 
-    // merge live commits ahead of static verified highlights
-    const merged = [...liveItems.slice(0, 8), ...staticItems].slice(0, 16);
+    const trimmed = liveItems.slice(0, 12);
     try {
       window.sessionStorage.setItem(
         CACHE_KEY,
-        JSON.stringify({ timestamp: Date.now(), items: merged })
+        JSON.stringify({ timestamp: Date.now(), items: trimmed })
       );
     } catch {
       // ignore storage quota errors
     }
 
-    return { items: merged, mode: "live" };
+    return { items: trimmed, mode: "live" };
   } catch {
-    return { items: staticItems, mode: "verified" };
+    return { items: [], mode: "unavailable" };
+  } finally {
+    window.clearTimeout(timeout);
   }
 }

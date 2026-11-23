@@ -1,21 +1,21 @@
 // lowercased comments per rule 8
-// master portfolio data payload strictly conforming to schema.ts and master_truth_full.md
+// master portfolio data payload strictly conforming to schema.ts and verified ground truth
 import { PortfolioConfigInput } from "./schema";
 import { RESUME_DRIVE_LINKS } from "./resumeLinks";
 
 export const rawPortfolioConfig: PortfolioConfigInput = {
   personal: {
     name: "Kartikey Kumar",
-    tagline: "High-Concurrency Systems Architect & Product Full-Stack Engineer",
+    tagline: "Backend Systems Engineer & Full-Stack Builder",
     subTagline:
-      "Building resilient distributed engines, zero-copy network parsers, and realtime web platforms.",
-    bio: "IIT Kanpur graduate ('26) with deep engineering roots in distributed systems, high-concurrency API architecture, and full-stack product craft. Proven experience maintaining production clusters at multi-million-user scale, executing zero-downtime rolling replica resyncs, building 5-minute checkpointed delta ETL pipelines, and designing sub-millisecond Protobuf vector search pipelines.",
+      "Building resilient event-driven pipelines, zero-copy network parsers, and high-concurrency APIs.",
+    bio: "IIT Kanpur graduate ('26) with deep engineering roots in backend systems, high-concurrency API architecture, and full-stack product craft. Proven experience maintaining shared MongoDB Atlas production databases at multi-million-user scale, executing zero-downtime rolling replica resyncs, building 5-minute checkpointed delta ETL pipelines, and designing 0.5 ms deterministic Protobuf context builders and pgvector semantic search.",
     education: {
       degree: "Bachelor of Technology in Civil Engineering",
       institution: "Indian Institute of Technology (IIT) Kanpur",
       graduationYear: "2026",
       notable:
-        "Extensive coursework & engineering focus in computer networks, operating systems, distributed architectures, and algorithms.",
+        "B.Tech Civil Engineering with systems engineering focus across networking, concurrency, databases, and backend infrastructure.",
     },
     socialLinks: {
       github: "https://github.com/zed-inn",
@@ -23,252 +23,10 @@ export const rawPortfolioConfig: PortfolioConfigInput = {
       linkedin: "https://www.linkedin.com/in/kartikey-kumar-iitk/",
       kaggle: "https://www.kaggle.com/skhull3",
       email: "kartikey.hom@gmail.com",
-      protonEmail: "skhull.coding@proton.me",
-      companyEmail: "kartikey@rocketreels.co",
     },
     resumeLinks: RESUME_DRIVE_LINKS,
   },
-  lenses: [
-    {
-      id: "omni",
-      name: "All Systems (Omni)",
-      category: "primary",
-      tagline: "Complete Technical Inventory & Systems Overview",
-      description:
-        "Full cross-section of all 10 repositories, 3 production experiences, and verified distributed systems benchmarks.",
-      icon: "Sparkles",
-      primarySkills: [
-        "Distributed Systems",
-        "Fastify",
-        "C++17",
-        "Python",
-        "PostgreSQL",
-        "MongoDB",
-        "Kafka",
-        "RabbitMQ",
-      ],
-    },
-    {
-      id: "fullstack_all",
-      name: "Fullstack Architecture",
-      category: "primary",
-      tagline: "End-to-End Product Craft & High-Scale Systems",
-      description:
-        "Production full-stack engineering across Fastify, Express, React 19, Next.js, WebSockets, and stateful databases.",
-      icon: "Layers",
-      primarySkills: [
-        "TypeScript",
-        "React",
-        "Next.js",
-        "Fastify",
-        "PostgreSQL",
-        "MongoDB",
-        "Tailwind CSS",
-        "REST/gRPC",
-      ],
-    },
-    {
-      id: "fullstack_node",
-      name: "Node.js Fullstack",
-      category: "nested",
-      parentId: "fullstack_all",
-      tagline: "V8 Event Loop & Real-Time Web Platforms",
-      description:
-        "Fastify 5, Express 5, React 19, Socket.io bidirectional sync, and LexoRank drag-and-drop systems.",
-      icon: "Terminal",
-      primarySkills: [
-        "Node.js",
-        "TypeScript",
-        "Fastify",
-        "Express",
-        "React",
-        "Socket.io",
-        "Drizzle ORM",
-        "Zod",
-      ],
-    },
-    {
-      id: "fullstack_python",
-      name: "Python Fullstack",
-      category: "nested",
-      parentId: "fullstack_all",
-      tagline: "Asyncio Runtimes & Full-Stack Dashboards",
-      description:
-        "FastAPI, Django DRF 5-replica clusters, React admin portals, BullMQ workers, and SQLAlchemy 2.0.",
-      icon: "Binary",
-      primarySkills: [
-        "Python",
-        "FastAPI",
-        "Django",
-        "React",
-        "SQLAlchemy",
-        "Pydantic",
-        "RabbitMQ",
-        "Redis",
-      ],
-    },
-    {
-      id: "backend_all",
-      name: "Backend Engineering",
-      category: "primary",
-      tagline: "High-Concurrency Microservices & ACID Invariants",
-      description:
-        "Focusing on event-driven streaming, row-level locks, transactional outbox relays, and high-throughput APIs.",
-      icon: "Server",
-      primarySkills: [
-        "Node.js",
-        "Python",
-        "Fastify",
-        "FastAPI",
-        "PostgreSQL",
-        "Kafka",
-        "RabbitMQ",
-      ],
-    },
-    {
-      id: "backend_node",
-      name: "Node.js Backend",
-      category: "nested",
-      parentId: "backend_all",
-      tagline: "High-Throughput Node.js Microservices",
-      description:
-        "Fastify 5, Express, MongoDB Atlas, Redis Pub/Sub, and event-driven outbox relays.",
-      icon: "Cpu",
-      primarySkills: [
-        "Node.js",
-        "TypeScript",
-        "Fastify",
-        "MongoDB",
-        "Redis",
-        "Kafka",
-        "Zod",
-      ],
-    },
-    {
-      id: "backend_python",
-      name: "Python Backend",
-      category: "nested",
-      parentId: "backend_all",
-      tagline: "ACID Concurrency & Python Systems",
-      description:
-        "FastAPI, Django 5 replicas, SQLAlchemy, zoneinfo, SQLite WAL immediate locks, and gRPC.",
-      icon: "Terminal",
-      primarySkills: [
-        "Python",
-        "FastAPI",
-        "Django",
-        "SQLAlchemy",
-        "Pydantic",
-        "gRPC",
-        "pytest",
-      ],
-    },
-    {
-      id: "devops",
-      name: "DevOps & Cloud Platform",
-      category: "primary",
-      tagline: "Multi-Cloud Infrastructure & Zero-Downtime Reliability",
-      description:
-        "Focusing on multi-service Docker topologies, AWS services, rolling Atlas replica resyncs, and Prometheus/Grafana.",
-      icon: "Cloud",
-      primarySkills: [
-        "Docker",
-        "AWS (EC2, S3, Lambda, CloudFront)",
-        "Nginx",
-        "GitHub Actions",
-        "Atlas API",
-        "Prometheus",
-      ],
-    },
-    {
-      id: "data",
-      name: "Data Engineering",
-      category: "primary",
-      tagline: "Incremental ETLs & Streaming Intelligence",
-      description:
-        "Focusing on 5-minute checkpointed delta ETLs, Kafka/Protobuf streaming, 4.8M+ user journeys, and Pandas normalization.",
-      icon: "Binary",
-      primarySkills: [
-        "Python",
-        "Pandas",
-        "Kafka",
-        "MongoDB Aggregation",
-        "PostgreSQL",
-        "pgvector",
-        "ETL",
-      ],
-    },
-    {
-      id: "systems",
-      name: "Systems & Core",
-      category: "primary",
-      tagline: "Low-Level Systems & Network Protocols",
-      description:
-        "Focusing on C++17 non-blocking Linux poll() event loops, zero-copy RFC 7230 parsing, and POSIX sockets.",
-      icon: "Flame",
-      primarySkills: [
-        "C++17",
-        "POSIX Sockets",
-        "Linux poll()",
-        "Zero-Copy Parser",
-        "TCP/IP",
-        "Concurrency",
-      ],
-    },
-    {
-      id: "swe",
-      name: "Software Engineer",
-      category: "primary",
-      tagline: "Generalist Systems & Clean Architecture",
-      description:
-        "Focusing on Clean Architecture, 18 Use Cases, base-62 BigInt LexoRank, and automated load testing.",
-      icon: "Boxes",
-      primarySkills: [
-        "Clean Architecture",
-        "TypeScript",
-        "Python",
-        "C++",
-        "CQRS",
-        "LexoRank",
-        "k6",
-      ],
-    },
-    {
-      id: "automation",
-      name: "Platform Automation",
-      category: "primary",
-      tagline: "Workflow Digitization & Blast-Radius Control",
-      description:
-        "Focusing on throttled batch migrations, automated AcroForm PDF generation, and AI-driven data enrichment.",
-      icon: "Wrench",
-      primarySkills: [
-        "Automation",
-        "Batch Workers",
-        "PhonePe Migration",
-        "iText 8",
-        "Gemini API",
-        "Cron Pipelines",
-      ],
-    },
-    {
-      id: "distributed_ai",
-      name: "Distributed Systems & AI Infra",
-      category: "primary",
-      tagline: "Event Streaming & Vector Search Architecture",
-      description:
-        "Focusing on Kafka transactional outbox relays, pgvector HNSW semantic search, and CPU vector embeddings.",
-      icon: "Network",
-      primarySkills: [
-        "Kafka",
-        "RabbitMQ",
-        "gRPC",
-        "Protobuf",
-        "pgvector",
-        "SentenceTransformers",
-        "Docker",
-      ],
-    },
-  ],
+  lenses: [],
   experiences: [
     {
       id: "rocket-reels",
@@ -277,12 +35,12 @@ export const rawPortfolioConfig: PortfolioConfigInput = {
       location: "Mumbai, India",
       period: "Aug 2026 – Present",
       summary:
-        "Owned high-scale production systems across MongoDB Atlas clusters, 5-minute checkpointed ETL pipelines, serverless image transformation pipelines, CMS administration with strict 1-to-1 RBAC, and payment migration cutovers.",
+        "Owned high-scale production systems across a shared MongoDB Atlas cluster, 5-minute checkpointed ETL pipelines, serverless image transformation pipelines, CMS administration with strict 1-to-1 RBAC, and payment migration cutovers.",
       achievements: [
-        "Pruned 20M+ stale MongoDB records across ottdbuat and CMSUAT without cluster downtime, triggering zero-downtime rolling Atlas replica resyncs to reclaim storage on shared production shards.",
+        "Pruned 20M+ stale MongoDB records across ottdbuat and CMSUAT without cluster downtime, triggering zero-downtime rolling Atlas replica resyncs to reclaim storage on the shared production shard.",
         "Engineered the Customer Data Platform (CDP) syncing 4.8M+ users, 15M+ view sessions, and 1.4M+ transactions with a 5-minute checkpointed delta ETL and 1-click PhonePe chargeback dispute export.",
         "Uncovered a 48% 7-day single-title churn drop-off across 4.8M+ users using a Next.js App Router and Edge SQLite (Turso) dashboard.",
-        "Built a serverless dynamic image resolution pipeline (CloudFront -> S3 -> AWS Lambda Sharp -> WebAssembly WebP) cutting mobile page load by 9s (50–60%) and image sizes by up to 95%.",
+        "Built backend lossless WebAssembly WebP upload compression (up to 50% smaller stored assets) and an on-demand dynamic image resolution pipeline (CloudFront -> S3 -> AWS Lambda Sharp) cutting mobile page load by 9s (50–60%) and payloads by up to 95%.",
         "Hardened Fastify admin panel backend with per-route RBAC, authenticated legacy Next.js proxy routing, Redis-locked JSON audit diff reports (800+ RPS across 10,000 calls), and custom multi-audio/multi-resolution AWS MediaConvert HLS pipelines.",
         "Recovered INR 25+ Lakhs in recurring revenue across 22,000+ lapsed subscribers via a 120-user pilot and throttled 3,000-user/day PhonePe migration.",
       ],
@@ -295,7 +53,6 @@ export const rawPortfolioConfig: PortfolioConfigInput = {
         "Redis",
         "Next.js",
         "React",
-        "Docker",
         "k6",
       ],
       lensWeights: {
@@ -376,7 +133,7 @@ export const rawPortfolioConfig: PortfolioConfigInput = {
         {
           name: "Serverless Dynamic Image Resolution Pipeline",
           description:
-            "CloudFront-first S3 caching with on-miss AWS Lambda Sharp resizing and lossless backend WebP compression.",
+            "Backend lossless WebAssembly WebP upload compression paired with CloudFront-first S3 caching and on-miss AWS Lambda Sharp resizing.",
           metrics: [
             {
               label: "Mobile Load Speed",
@@ -411,7 +168,7 @@ export const rawPortfolioConfig: PortfolioConfigInput = {
       summary:
         "Scaled campus community platform to 140+ active users. Re-architected a 6-month monolith into an 18-module TypeScript backend in 5 days, ingested 70k government institute records via Node.js ETL, and automated CI/CD across 2 AWS EC2 environments.",
       achievements: [
-        "Re-architected monolithic JavaScript backend into 18 modular services in TypeScript, Express 5, PostgreSQL, and Redis in a 5-day sprint for 140+ campus users.",
+        "Re-architected monolithic JavaScript backend into an 18-module TypeScript architecture with Express 5, PostgreSQL, and Redis in a 5-day sprint for 140+ campus users.",
         "Auto-generated 5,501 lines of API documentation on server startup by inspecting runtime Zod DTO contracts.",
         "Built a Node.js Excel ETL ingesting 70,000+ government AISHE institutes into PostgreSQL with automated Google Gemini 2.0 Flash AI profile enrichment.",
         "Automated GitHub Actions CI/CD across 2 AWS EC2 instances with Nginx, offloading TypeScript builds to avoid 1 GB RAM spikes and eliminate manual SSH releases (saving 15 min/deploy).",
@@ -508,7 +265,7 @@ export const rawPortfolioConfig: PortfolioConfigInput = {
     {
       id: "office-automation-iitk",
       company: "Office Automation, IIT Kanpur",
-      role: "Backend / Software Developer Intern",
+      role: "Software Developer Intern",
       location: "Kanpur, India",
       period: "Jun 2024 – Aug 2024",
       summary:
@@ -570,30 +327,30 @@ export const rawPortfolioConfig: PortfolioConfigInput = {
     {
       id: "real-estate-pipeline",
       latencyProfile: {
-        p50: "1.4ms",
-        p95: "4.8ms",
-        p99: "11.2ms",
+        p50: "540.75 ms",
+        mean: "804.19 ms",
+        p95: "1.87 s",
       },
       failureInvariants: [
         {
           failureMode: "Kafka Broker Partitioning / Producer Timeout",
           mitigation:
-            "Transactional outbox table with SKIP LOCKED relay worker guarantees zero dual-write message loss.",
+            "Transactional outbox table with SELECT FOR UPDATE SKIP LOCKED relay worker and manual Kafka offset commits guarantee zero dual-write message loss.",
         },
         {
-          failureMode: "Vector Dimension Invalidation & Drift",
+          failureMode: "Cross-Service Schema Drift & Malformed Payloads",
           mitigation:
-            "Schema compilation enforced at CI gate; incremental HNSW indexing with pgvector delta buffers.",
+            "Single-source .proto schema compiles TypeScript, Zod, Drizzle, and Python models via Buf CLI (make proto); poisoned messages route to real_estate.listing.dlq with replay-dlq.ts.",
         },
         {
-          failureMode: "Consumer Worker Memory Leak under Burst",
+          failureMode: "Ungraceful Shutdown & Outbox Batch Interruption",
           mitigation:
-            "Bounded batch sliding buffers and explicit garbage collection thresholds on Fastify worker loops.",
+            "SIGTERM/SIGINT bound to AbortSignal drains in-flight outbox batches cleanly; CPU embedding worker verified at 245.11 MB peak RSS with 0 uncollectable GC tensor leaks.",
         },
       ],
       code: "SYS-01",
       concurrencyModel: "5-Stage Event Pipeline / Kafka Ingestion",
-      memoryProfile: "Bounded Buffer Streaming / 384-dim Tensor Pool",
+      memoryProfile: "245.11 MB Peak RSS / 0 GC Tensor Leaks",
       protocolSpec: "101-Field Protobuf / gRPC & pgvector HNSW",
       title: "Real Estate Intelligence Pipeline",
       category: "Distributed Systems & Vector Search",
@@ -662,56 +419,35 @@ export const rawPortfolioConfig: PortfolioConfigInput = {
         "Dead-Letter Queue (real_estate.listing.dlq) captures malformed payloads with a standalone replay CLI tool.",
       ],
       featured: true,
-      commitHistory: [
-        {
-          hash: "7a2f1b4",
-          message: "chore: metrics added for 10k k6 stress benchmark",
-          date: "2026-10-12",
-          author: "Zed <skhull.coding@gmail.com>",
-        },
-        {
-          hash: "8d3e9c1",
-          message:
-            "feat: deterministic protobuf context generator replacing ollama",
-          date: "2026-10-08",
-          author: "Zed <skhull.coding@gmail.com>",
-        },
-        {
-          hash: "3c4a5f2",
-          message:
-            "feat: transactional outbox relay with skip locked concurrency",
-          date: "2026-09-28",
-          author: "Zed <skhull.coding@gmail.com>",
-        },
-      ],
+      commitHistory: [],
     },
     {
       id: "b2b-rate-reconciliation",
       latencyProfile: {
-        p50: "820µs",
-        p95: "2.4ms",
-        p99: "5.1ms",
+        p50: "823.46 ms",
+        mean: "1.05 s",
+        p95: "2.38 s",
       },
       failureInvariants: [
         {
-          failureMode: "Concurrent Ledger Mutation Race Condition",
+          failureMode: "Concurrent Booking Audit Race Condition",
           mitigation:
-            "select_for_update() row-level locking enforces atomic state transitions across multi-currency ledgers.",
+            "select_for_update() row-level locking inside transaction.atomic() serializes concurrent snapshot and invoice updates per booking_ref with 0 duplicates.",
         },
         {
-          failureMode: "Multi-Tenant Batch Reconciliation Partial Failure",
+          failureMode: "Batch Invoice Dual-Write Partial Publish Failure",
           mitigation:
-            "Two-phase commit audit logs with compensating rollback transactions identifying discrepancies accurately.",
+            "Fastify catches broker failures post-commit and returns HTTP 207 Multi-Status identifying exact failed events, while poisoned payloads route to auditsys.dlx.",
         },
         {
-          failureMode: "RabbitMQ Queue Saturation during Month-End Peak",
+          failureMode: "RabbitMQ Saturation & Long-Lived ORM Connection Leaks",
           mitigation:
-            "5-replica worker pool auto-draining with backpressure acknowledgment limits (prefetch 50).",
+            "5 Django worker replicas consume with channel.basic_qos(prefetch_count=50) and invoke django.db.close_old_connections() on every message callback.",
         },
       ],
       code: "SYS-02",
-      concurrencyModel: "5-Replica Distributed Worker / RabbitMQ PubSub",
-      memoryProfile: "Row-Level select_for_update() Locked Memory",
+      concurrencyModel: "5-Replica Django Workers / RabbitMQ Queues & BullMQ",
+      memoryProfile: "55.3 MB/Django Replica · 59.26 MB RabbitMQ",
       protocolSpec: "3-Phase Financial Audit Protocol",
       title: "B2B Rate Reconciliation Engine",
       category: "Polyglot Microservices & Financial Audits",
@@ -780,36 +516,14 @@ export const rawPortfolioConfig: PortfolioConfigInput = {
         "Phase 3: Django executes atomic 3-way invoice match with row-level locks, logging discrepancy delta and updating SupplierRisk score.",
       ],
       featured: true,
-      commitHistory: [
-        {
-          hash: "4f9b2d1",
-          message:
-            "perf: add select_for_update row locking to eliminate race conditions",
-          date: "2026-10-18",
-          author: "Zed <kartikey.hom@gmail.com>",
-        },
-        {
-          hash: "9c1a7e3",
-          message:
-            "feat: 3-way invoice match settlement with HTTP 207 partial commit handling",
-          date: "2026-10-14",
-          author: "Zed <kartikey.hom@gmail.com>",
-        },
-        {
-          hash: "2e8d4a6",
-          message:
-            "chore: docker-compose 4-service polyglot topology with prometheus",
-          date: "2026-10-02",
-          author: "Zed <kartikey.hom@gmail.com>",
-        },
-      ],
+      commitHistory: [],
     },
     {
       id: "roomloop",
       latencyProfile: {
-        p50: "77.3ms",
-        p95: "256.9ms",
-        p99: "410.0ms",
+        p50: "77.32 ms",
+        mean: "95.39 ms",
+        p95: "256.88 ms",
       },
       failureInvariants: [
         {
@@ -829,9 +543,9 @@ export const rawPortfolioConfig: PortfolioConfigInput = {
         },
       ],
       code: "SYS-03",
-      concurrencyModel: "BEGIN IMMEDIATE Write Locks / Async Worker Pool",
+      concurrencyModel: "FastAPI ASGI / SQLite WAL BEGIN IMMEDIATE",
       memoryProfile: "SQLite Write-Ahead Log (WAL) 64 MB Page Cache",
-      protocolSpec: "RFC 5545 iCalendar / IANA Timezone Invariants",
+      protocolSpec: "REST JSON / IANA zoneinfo & ISO-8601",
       title: "RoomLoop Multi-Timezone Booking API",
       category: "Backend Systems & Concurrency",
       shortDescription:
@@ -895,36 +609,10 @@ export const rawPortfolioConfig: PortfolioConfigInput = {
         "Enforces the 50% Success + Max 2 Conflicts invariant for recurring meeting series rollbacks.",
       ],
       featured: true,
-      commitHistory: [
-        {
-          hash: "5d2e8b1",
-          message: "test: add 5000 dynamic payloads benchmark with k6 runner",
-          date: "2026-11-06",
-          author: "Zed <skhull.coding@gmail.com>",
-        },
-        {
-          hash: "1a8f4c2",
-          message:
-            "feat: sqlite BEGIN IMMEDIATE engine listener for concurrency safety",
-          date: "2026-11-03",
-          author: "Zed <skhull.coding@gmail.com>",
-        },
-        {
-          hash: "8b7d3e9",
-          message:
-            "feat: zoneinfo calendar arithmetic preventing DST meeting drift",
-          date: "2026-10-29",
-          author: "Zed <skhull.coding@gmail.com>",
-        },
-      ],
+      commitHistory: [],
     },
     {
       id: "kanban-clean-architecture",
-      latencyProfile: {
-        p50: "450µs",
-        p95: "1.1ms",
-        p99: "3.2ms",
-      },
       failureInvariants: [
         {
           failureMode: "Domain Invariant Corruption on Card Move",
@@ -944,8 +632,8 @@ export const rawPortfolioConfig: PortfolioConfigInput = {
       ],
       code: "SYS-04",
       concurrencyModel: "CQRS Segregation / Post-Commit Event Dispatch",
-      memoryProfile: "Arbitrary-Precision Base-62 BigInt In-Memory Arena",
-      protocolSpec: "RFC 6455 WebSockets & Clean Architecture Domain Core",
+      memoryProfile: "Zero-ORM Raw pg Pool / Base-62 BigInt",
+      protocolSpec: "REST + Socket.io WebSockets / Clean Architecture Core",
       title: "Real-Time Collaborative Kanban API",
       category: "Full-Stack & Clean Architecture",
       shortDescription:
@@ -1002,30 +690,10 @@ export const rawPortfolioConfig: PortfolioConfigInput = {
         "Deterministic keyset cursor pagination prevents skipped items on millisecond timestamp collisions.",
       ],
       featured: true,
-      commitHistory: [
-        {
-          hash: "9e3b1a2",
-          message:
-            "feat: base-62 bigint lexorank implementation with string precision growth",
-          date: "2026-07-22",
-          author: "Zed <skhull.coding@proton.me>",
-        },
-        {
-          hash: "3d5f8c4",
-          message:
-            "feat: post-commit event basket preventing phantom socket.io emits",
-          date: "2026-07-19",
-          author: "Zed <skhull.coding@proton.me>",
-        },
-      ],
+      commitHistory: [],
     },
     {
       id: "indian-institutes-dataset",
-      latencyProfile: {
-        p50: "600µs",
-        p95: "1.8ms",
-        p99: "4.5ms",
-      },
       failureInvariants: [
         {
           failureMode: "Heterogeneous Government Schema Ingestion",
@@ -1045,8 +713,8 @@ export const rawPortfolioConfig: PortfolioConfigInput = {
       ],
       code: "SYS-05",
       concurrencyModel: "Vectorized Pandas & NumPy Batch Pipeline",
-      memoryProfile: "Vectorized Pandas Memory Mapping / Pipe-Delimited Export",
-      protocolSpec: "Kaggle Open Data Standards / AISHE Schema Validation",
+      memoryProfile: "Pandas & NumPy DataFrames / Pipe-Delimited Export",
+      protocolSpec: "5 AISHE Excel Sheets → Pipe-Delimited CSV",
       title: "All Indian Higher Education Dataset",
       category: "Data Engineering & Kaggle Publishing",
       shortDescription:
@@ -1098,33 +766,13 @@ export const rawPortfolioConfig: PortfolioConfigInput = {
       architectureNotes: [
         "Unified colleges, standalones, universities, PM Vidyalaxmi, and R&D institutes into a single normalized schema.",
         "Cumulative scoring assigns +1 to institutional keywords and -1 to geographical tokens, splitting at argmax.",
-        "Published under open data license on Kaggle for researchers and higher-education policymakers.",
+        "Published publicly on Kaggle for researchers and developers.",
       ],
       featured: true,
-      commitHistory: [
-        {
-          hash: "6b2a8d1",
-          message:
-            "feat: cumulative word-scoring algorithm for address extraction",
-          date: "2026-07-15",
-          author: "Zed <skhull.coding@gmail.com>",
-        },
-        {
-          hash: "1f4e7c3",
-          message:
-            "feat: normalize 5 government aishe excel sheets into single dataset",
-          date: "2026-07-10",
-          author: "Zed <skhull.coding@gmail.com>",
-        },
-      ],
+      commitHistory: [],
     },
     {
       id: "zero-copy-http-server",
-      latencyProfile: {
-        p50: "120µs",
-        p95: "380µs",
-        p99: "890µs",
-      },
       failureInvariants: [
         {
           failureMode: "TCP Packet Fragmentation Across poll() Ticks",
@@ -1202,30 +850,10 @@ export const rawPortfolioConfig: PortfolioConfigInput = {
         "Lazy percent-decoding via std::variant keeps clean URIs as zero-copy std::string_view slices into the buffer.",
       ],
       featured: true,
-      commitHistory: [
-        {
-          hash: "4d7e2a1",
-          message:
-            "feat: zero-copy std::string_view sliding window state-machine parser",
-          date: "2026-08-04",
-          author: "Zed <skhull.coding@proton.me>",
-        },
-        {
-          hash: "8f1c3b9",
-          message:
-            "perf: bitwise-NOT descriptor compaction on non-blocking poll loop",
-          date: "2026-07-28",
-          author: "Zed <skhull.coding@proton.me>",
-        },
-      ],
+      commitHistory: [],
     },
     {
       id: "huffman-file-compressor",
-      latencyProfile: {
-        p50: "95µs",
-        p95: "290µs",
-        p99: "640µs",
-      },
       failureInvariants: [
         {
           failureMode: "Bitstream Header Deserialization Mismatch",
@@ -1244,7 +872,7 @@ export const rawPortfolioConfig: PortfolioConfigInput = {
         },
       ],
       code: "SYS-07",
-      concurrencyModel: "Synchronous Stream I/O / Heap Bit Shifting",
+      concurrencyModel: "Single-Threaded Binary Stream I/O / Min-Heap Tree",
       memoryProfile: "Bitwise Shift Buffer / Byte-for-Byte Reconstruction",
       protocolSpec: "Custom Binary Compressor Header & Prefix Tree",
       title: "Huffman Lossless File Compressor",
@@ -1301,23 +929,10 @@ export const rawPortfolioConfig: PortfolioConfigInput = {
         "Bit-level shift buffer packs variable-length codes into 8-bit byte boundaries.",
       ],
       featured: false,
-      commitHistory: [
-        {
-          hash: "5a9f2e7",
-          message:
-            "feat: custom binary header packing with bit-level shift buffer",
-          date: "2026-07-11",
-          author: "Zed <skhull.coding@proton.me>",
-        },
-      ],
+      commitHistory: [],
     },
     {
       id: "multithreaded-chat-server",
-      latencyProfile: {
-        p50: "310µs",
-        p95: "780µs",
-        p99: "1.9ms",
-      },
       failureInvariants: [
         {
           failureMode: "Deadlock on Shared Room State Mutex",
@@ -1337,7 +952,7 @@ export const rawPortfolioConfig: PortfolioConfigInput = {
       ],
       code: "SYS-08",
       concurrencyModel: "Thread-Per-Client / Resource-Scoped Mutexes",
-      memoryProfile: "Stack-Allocated Client Buffers / Lock-Free Read Rails",
+      memoryProfile: "Mutex-Protected In-Memory Tables / Socket Buffers",
       protocolSpec: "Command Protocol (/broadcast, /msg, /group_msg)",
       title: "Cross-Platform Multithreaded TCP Chat Server",
       category: "Systems Programming & Networking",
@@ -1393,23 +1008,10 @@ export const rawPortfolioConfig: PortfolioConfigInput = {
         "Thread-safe routing table broadcasting messages across active user groups with mutual exclusion.",
       ],
       featured: false,
-      commitHistory: [
-        {
-          hash: "3d8a1c9",
-          message:
-            "feat: cross-platform socket abstraction and command dispatchers",
-          date: "2026-07-08",
-          author: "Zed <skhull.coding@proton.me>",
-        },
-      ],
+      commitHistory: [],
     },
     {
       id: "page-pulse-seo-auditor",
-      latencyProfile: {
-        p50: "3.2ms",
-        p95: "12.4ms",
-        p99: "28.5ms",
-      },
       failureInvariants: [
         {
           failureMode: "Hanging Sockets on Stalled Target Servers",
@@ -1428,9 +1030,9 @@ export const rawPortfolioConfig: PortfolioConfigInput = {
         },
       ],
       code: "SYS-09",
-      concurrencyModel: "Next.js Edge Worker / Non-Blocking AbortController Stream",
-      memoryProfile: "Cheerio DOM Stream Parser / Zero Socket Memory Leaks",
-      protocolSpec: "HTML5 Semantic Standards & OpenGraph RFC Protocol",
+      concurrencyModel: "Next.js App Router API / AbortController",
+      memoryProfile: "Cheerio DOM Parser / Zero Headless Browser Overhead",
+      protocolSpec: "HTTP Fetch / HTML5 Semantic DOM Audit",
       title: "Page Pulse SEO & URL Auditing Engine",
       category: "Frontend & Full-Stack Tooling",
       shortDescription:
@@ -1480,23 +1082,10 @@ export const rawPortfolioConfig: PortfolioConfigInput = {
         "Analyzes full HTML tag frequency distributions without headless browser overhead.",
       ],
       featured: false,
-      commitHistory: [
-        {
-          hash: "7c1e4b8",
-          message:
-            "feat: cheerio dom landmark extraction with vitest unit suites",
-          date: "2026-07-02",
-          author: "Zed <skhull.coding@gmail.com>",
-        },
-      ],
+      commitHistory: [],
     },
     {
       id: "nakama-tic-tac-toe",
-      latencyProfile: {
-        p50: "280µs",
-        p95: "620µs",
-        p99: "1.4ms",
-      },
       failureInvariants: [
         {
           failureMode: "Client-Side Move Tampering & Out-of-Turn Injection",
@@ -1506,7 +1095,7 @@ export const rawPortfolioConfig: PortfolioConfigInput = {
         {
           failureMode: "Session Ghosting on Sudden Player Disconnect",
           mitigation:
-            "Nakama matchLoop presence listener catching client drops and awarding forfeit victory to the remaining peer.",
+            "Nakama matchLeave lifecycle hook catching client drops and awarding forfeit victory to the remaining peer.",
         },
         {
           failureMode: "Concurrent Cell Contention Race",
@@ -1572,15 +1161,7 @@ export const rawPortfolioConfig: PortfolioConfigInput = {
         "Integrated Nakama matchmaking pool to pair concurrent players into isolated match instances.",
       ],
       featured: false,
-      commitHistory: [
-        {
-          hash: "2b6d8e4",
-          message:
-            "feat: authoritative matchLoop validating move turns and win conditions",
-          date: "2026-06-25",
-          author: "Zed <skhull.coding@proton.me>",
-        },
-      ],
+      commitHistory: [],
     },
   ],
   storyChapters: [
@@ -1629,14 +1210,14 @@ export const rawPortfolioConfig: PortfolioConfigInput = {
       narrative: [
         "In early-stage startups, velocity and architecture must move in lockstep.",
         "As Founding Backend Engineer at CampusX, after maintaining an Express monolith for 6 months, technical debt was slowing feature delivery. In an intense 5-day rewrite, I re-architected the entire backend into CampusX v2—a clean 18-module TypeScript system with automatic transaction propagation via continuation-local storage (cls-hooked).",
-        "I built a Node.js ETL pipeline using read-excel-file to normalize 70,000+ government higher-education institutes into PostgreSQL with automated Gemini Flash profile enrichment, and tuned V8 old-space heap at 450 MB on 1 GB AWS EC2 instances under Nginx to eliminate server crashes.",
+        "I built a Node.js ETL pipeline using read-excel-file to normalize 70,000+ government higher-education institutes into PostgreSQL with automated Gemini Flash profile enrichment, and tuned V8 old-space heap at 450 MB on 1 GB AWS EC2 instances under Nginx to prevent memory spikes on 1 GB EC2.",
       ],
       highlightStats: [
         {
           label: "Architecture Sprint",
           value: "5 Days",
           highlight: true,
-          detail: "18 modular TypeScript services",
+          detail: "18 feature-based TypeScript modules",
         },
         {
           label: "Institutes Ingested",
@@ -1661,7 +1242,7 @@ export const rawPortfolioConfig: PortfolioConfigInput = {
       subtitle: "Rocket Reels production architecture & INR 25L+ recovery (Aug 2026 – Present)",
       narrative: [
         "Production at scale is messy, volatile, and relentless.",
-        "At Rocket Reels, 20M+ stale documents had accumulated across shared MongoDB clusters. A naive blocking delete or compact would have degraded live production traffic. I designed a 5-phase dependency-aware pruning pipeline with floor guards and executed rolling Atlas replica resyncs to reclaim physical disk space with 0% cluster downtime.",
+        "At Rocket Reels, 20M+ stale documents had accumulated on a shared MongoDB cluster. A naive blocking delete or compact would have degraded live production traffic. I designed a 5-phase dependency-aware pruning pipeline with floor guards and executed rolling Atlas replica resyncs to reclaim physical disk space with 0% cluster downtime.",
         "To empower non-technical teams, I built the Customer Data Platform syncing 4.8M+ users and 15M+ sessions via a 5-minute checkpointed delta ETL, while an emergency PhonePe migration across 22,000+ lapsed subscribers recovered INR 25+ Lakhs in recurring revenue via a 120-user pilot and throttled daily batches.",
       ],
       highlightStats: [
@@ -1681,7 +1262,7 @@ export const rawPortfolioConfig: PortfolioConfigInput = {
           label: "Users Synced",
           value: "4.8M+",
           highlight: false,
-          detail: "Unified across 3 MongoDB clusters",
+          detail: "Unified across 3 MongoDB databases",
         },
       ],
       linkedProjectIds: [],
@@ -1705,10 +1286,10 @@ export const rawPortfolioConfig: PortfolioConfigInput = {
           detail: "0 dropped events across 10,000 requests",
         },
         {
-          label: "Context Speedup",
-          value: "10,000x",
+          label: "Context Builder",
+          value: "5,000ms → 0.5ms",
           highlight: true,
-          detail: "5,000ms LLM replaced with 0.5ms Protobuf",
+          detail: "Deterministic Protobuf template replacing Ollama LLM",
         },
         {
           label: "Financial Parity",
@@ -1728,10 +1309,10 @@ export const rawPortfolioConfig: PortfolioConfigInput = {
       id: "chapter-4",
       number: 4,
       title: "Clean Domain Architecture & Open Data",
-      subtitle: "RoomLoop, BigInt LexoRank, and Kaggle open data publishing (2026)",
+      subtitle: "BigInt LexoRank, Clean Architecture, and Kaggle publishing (2026)",
       narrative: [
         "Great engineering gives back to the developer community.",
-        "I consolidated and normalized 70,016 Indian higher education records across 5 government AISHE Excel reports, building a cumulative word-scoring algorithm to separate names from addresses across 60,000+ rows without manual labeling, and published the dataset openly on Kaggle.",
+        "I consolidated and normalized 70,016 Indian higher education records across 5 government AISHE Excel reports, building a cumulative word-scoring algorithm to separate names from addresses across 60,000+ rows without manual labeling, and published the dataset publicly on Kaggle.",
         "In the Kanban API, I proved that pure domain engines can exist completely free of HTTP frameworks and ORMs by implementing arbitrary-precision base-62 BigInt LexoRank for O(1) drag-and-drop sorting.",
       ],
       highlightStats: [
@@ -1739,7 +1320,7 @@ export const rawPortfolioConfig: PortfolioConfigInput = {
           label: "Institutes Normalized",
           value: "70,016",
           highlight: true,
-          detail: "Published on Kaggle under open license",
+          detail: "Published publicly on Kaggle",
         },
         {
           label: "Domain Use Cases",

@@ -36,11 +36,17 @@ jobs:
         uses: actions/configure-pages@v5
 
       - name: Build Vite bundle
+        env:
+          REPO_FULL: ${{ github.repository }}
+          REPO_OWNER: ${{ github.repository_owner }}
         run: |
-          if [ "${{ github.event.repository.name }}" = "${{ github.repository_owner }}.github.io" ]; then
+          REPO_NAME="${REPO_FULL#*/}"
+          REPO_NAME_LOWER="$(printf '%s' "$REPO_NAME" | tr '[:upper:]' '[:lower:]')"
+          USER_SITE_LOWER="$(printf '%s.github.io' "$REPO_OWNER" | tr '[:upper:]' '[:lower:]')"
+          if [ "$REPO_NAME_LOWER" = "$USER_SITE_LOWER" ]; then
             npx tsc -b && npx vite build --base=/
           else
-            npx tsc -b && npx vite build --base=/${{ github.event.repository.name }}/
+            npx tsc -b && npx vite build --base="/${REPO_NAME}/"
           fi
 
       - name: Upload artifact

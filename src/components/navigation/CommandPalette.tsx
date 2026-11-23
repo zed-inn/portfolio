@@ -1,6 +1,6 @@
 // lowercased comments per rule 8
 // streamlined theme-aware wai-aria combobox command palette (cmd/ctrl+k)
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import {
   ArrowUpRight,
@@ -35,30 +35,53 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose 
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [copiedEmail, setCopiedEmail] = useState(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const copyTimerRef = useRef<number | null>(null);
 
-  const jumpTo = (hash: string) => {
-    onClose();
-    const el = document.querySelector(hash);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
+  const clearCopyTimer = useCallback(() => {
+    if (copyTimerRef.current !== null) {
+      window.clearTimeout(copyTimerRef.current);
+      copyTimerRef.current = null;
     }
-  };
+  }, []);
 
-  const copyEmail = async () => {
+  useEffect(() => {
+    return () => clearCopyTimer();
+  }, [clearCopyTimer]);
+
+  const jumpTo = useCallback(
+    (hash: string) => {
+      onClose();
+      const el = document.querySelector(hash);
+      if (el) {
+        const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        el.scrollIntoView({ behavior: reduced ? "auto" : "smooth" });
+      }
+    },
+    [onClose]
+  );
+
+  const copyEmail = useCallback(async () => {
+    const email = portfolioData.personal.socialLinks.email;
     try {
-      await navigator.clipboard.writeText(portfolioData.personal.socialLinks.email);
+      if (!navigator.clipboard?.writeText) {
+        throw new Error("clipboard api unavailable");
+      }
+      await navigator.clipboard.writeText(email);
       setCopiedEmail(true);
-      window.setTimeout(() => {
+      clearCopyTimer();
+      copyTimerRef.current = window.setTimeout(() => {
         setCopiedEmail(false);
+        copyTimerRef.current = null;
         onClose();
       }, 650);
     } catch {
-      window.location.href = `mailto:${portfolioData.personal.socialLinks.email}`;
+      window.location.href = `mailto:${email}`;
       onClose();
     }
-  };
+  }, [clearCopyTimer, onClose]);
 
   const commands: PaletteCommand[] = useMemo(() => {
+    const email = portfolioData.personal.socialLinks.email;
     const quickActions: PaletteCommand[] = [
       {
         id: "open-resume",
@@ -75,9 +98,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose 
       {
         id: "copy-email",
         group: "Quick Actions",
-        label: copiedEmail
-          ? "Copied kartikey.hom@gmail.com"
-          : `Copy Email (${portfolioData.personal.socialLinks.email})`,
+        label: copiedEmail ? `Copied ${email}` : `Copy Email (${email})`,
         hint: "Clipboard",
         keywords: "email contact copy mailto reach",
         icon: copiedEmail ? (
@@ -162,7 +183,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose 
     }));
 
     return [...quickActions, ...sectionCommands, ...repoCommands];
-  }, [copiedEmail]);
+  }, [copiedEmail, copyEmail, jumpTo, onClose]);
 
   const filteredCommands = useMemo(() => {
     const trimmed = query.trim().toLowerCase();
@@ -182,11 +203,21 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose 
   useEffect(() => {
     if (!isOpen) {
       setQuery("");
+      setCopiedEmail(false);
+      clearCopyTimer();
       return;
     }
     const timer = window.setTimeout(() => inputRef.current?.focus(), 20);
     return () => window.clearTimeout(timer);
-  }, [isOpen]);
+  }, [clearCopyTimer, isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const active = filteredCommands[selectedIndex];
+    if (!active) return;
+    const optionEl = document.getElementById(`cmd-option-${active.id}`);
+    optionEl?.scrollIntoView({ block: "nearest" });
+  }, [filteredCommands, isOpen, selectedIndex]);
 
   useEffect(() => {
     if (!isOpen) return;
