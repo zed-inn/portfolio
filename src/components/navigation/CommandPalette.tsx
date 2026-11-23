@@ -269,6 +269,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose 
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.14 }}
+          data-lenis-prevent
           className="fixed inset-0 z-[120] flex items-start justify-center pt-[12vh] px-4 bg-black/55 backdrop-blur-[2px]"
           onClick={onClose}
           role="dialog"
@@ -313,7 +314,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose 
               id="command-palette-listbox"
               role="listbox"
               aria-label="Available commands"
-              className="max-h-[58vh] overflow-y-auto p-2 space-y-3"
+              className="max-h-[58vh] overflow-y-auto overscroll-contain p-2 space-y-3"
             >
               {filteredCommands.length === 0 ? (
                 <div className="py-10 text-center text-xs text-[var(--ink-faint)]">

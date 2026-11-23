@@ -4,30 +4,44 @@
 
 @layer base {
   :root {
+    color-scheme: light;
     --bg: #f7f6f2;
-    --bg-subtle: #efede7;
+    --bg-alt: #f1efe9;
+    --bg-subtle: #eae7df;
     --bg-elevated: #ffffff;
+    --surface: #ffffff;
+    --surface-hover: #faf9f5;
+    --surface-specular: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 8px 24px -16px rgba(17, 17, 16, 0.14);
     --ink: #111110;
-    --ink-muted: #575651;
-    --ink-faint: #8a8880;
+    --ink-muted: #4b4a45;
+    --ink-faint: #6b6961;
     --rule: rgba(17, 17, 16, 0.12);
     --rule-strong: rgba(17, 17, 16, 0.28);
     --accent: #0f766e;
+    --hero-glow: rgba(15, 118, 110, 0.045);
+    --grain-opacity: 0.03;
     --btn-bg: #111110;
     --btn-ink: #f7f6f2;
     --btn-bg-hover: #292926;
   }
 
   .dark {
+    color-scheme: dark;
     --bg: #0a0a0a;
-    --bg-subtle: #141413;
+    --bg-alt: #0f0f0e;
+    --bg-subtle: #181816;
     --bg-elevated: #111110;
+    --surface: #151514;
+    --surface-hover: #1b1b19;
+    --surface-specular: inset 0 1px 0 rgba(255, 255, 255, 0.065), 0 12px 32px -18px rgba(0, 0, 0, 0.65);
     --ink: #f4f4f0;
-    --ink-muted: #a1a09a;
-    --ink-faint: #676661;
+    --ink-muted: #b0afa8;
+    --ink-faint: #8c8b84;
     --rule: rgba(244, 244, 240, 0.11);
     --rule-strong: rgba(244, 244, 240, 0.28);
     --accent: #34d399;
+    --hero-glow: rgba(52, 211, 153, 0.055);
+    --grain-opacity: 0.024;
     --btn-bg: #f4f4f0;
     --btn-ink: #0a0a0a;
     --btn-bg-hover: #ffffff;
@@ -39,6 +53,13 @@
     color: var(--ink);
   }
 
+  /* prevent native css smooth scroll from fighting lenis inertia */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+    scroll-behavior: auto;
+  }
+
   #workspace,
   #experience,
   #log {
@@ -46,17 +67,18 @@
   }
 
   :focus-visible {
-    outline: 2px solid var(--ink);
+    outline: 2px solid var(--accent);
     outline-offset: 2px;
     border-radius: 4px;
   }
 
+  /* overflow-x: clip prevents horizontal scrollbars without breaking position: sticky */
   body {
     background-color: var(--bg);
     color: var(--ink);
     font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
-    overflow-x: hidden;
+    overflow-x: clip;
     margin: 0;
     padding: 0;
     min-height: 100vh;
@@ -90,6 +112,38 @@
   ::-webkit-scrollbar-thumb {
     background: var(--rule-strong);
     border-radius: 9999px;
+  }
+}
+
+/* subtle top-down hero atmosphere with zero extra dom nodes or gpu blur cost */
+.hero-ambient {
+  background-image: radial-gradient(
+    ellipse 80% 55% at 50% -10%,
+    var(--hero-glow),
+    transparent 70%
+  );
+}
+
+/* subtle specular top hairline lighting on elevated surfaces */
+.surface-specular {
+  box-shadow: var(--surface-specular);
+}
+
+/* archival micro-grain overlay using percent-encoded svg turbulence for chrome/safari/firefox */
+.editorial-grain {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  user-select: none;
+  opacity: var(--grain-opacity);
+  background-size: 180px 180px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27180%27 height=%27180%27 viewBox=%270 0 180 180%27%3E%3Cfilter id=%27n%27%3E%3CfeTurbulence type=%27fractalNoise%27 baseFrequency=%270.85%27 numOctaves=%272%27 stitchTiles=%27stitch%27/%3E%3C/filter%3E%3Crect width=%27180%27 height=%27180%27 filter=%27url(%23n)%27 opacity=%271%27/%3E%3C/svg%3E");
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .editorial-grain {
+    display: none;
   }
 }
 
